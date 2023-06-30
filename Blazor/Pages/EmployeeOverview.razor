@@ -1,0 +1,29 @@
+﻿@page "/employeeoverview"
+<PageTitle>@Title</PageTitle>
+ <h2>Employee Overview</h2>
+ @if (Employees == null)
+ {
+     <p><em>Loading...</em></p>
+ } 
+ else
+ {
+     <QuickViewPopup Employee="_selectedEmployee"></QuickViewPopup>
+     <div class="row">
+         @foreach (var employee in Employees)
+         {  
+             // In the EmployeeCard I specify that when the event comes from the EmployeeCard, I will call ShowQuickViewPopup. That is an event that gets in the selectedEmployee from the EmployeeCard, and it will set that to be _selectedEmployee property 
+             <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                 <!--Any errors that are thrown are stopped at this ErrorBoundary-->
+                 <ErrorBoundary>
+                     <ChildContent>
+                         <EmployeeCard Employee="employee" EmployeeQuickViewClicked="ShowQuickViewPopup"></EmployeeCard>
+                     </ChildContent>
+                     <ErrorContent>
+                         <p class="errorUI">Invalid employee!</p>
+                     </ErrorContent>
+                 </ErrorBoundary>
+             </div>
+         }
+     </div>
+ }
+
